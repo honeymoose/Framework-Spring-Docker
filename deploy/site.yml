@@ -1,0 +1,30 @@
+# This is your main playbook you will run with:
+# ansible-playbook site.yml
+# You can kick off everything from this playbook.
+# Or, you can create separate playbooks in this directory for specific orchestration events.
+
+---
+- name: apply common configuration to all nodes
+  hosts: webservers
+#  user: root
+
+  tasks:
+    - name: copy file at root dir of flash in slot 3 of sw1(ios)
+      ansible.builtin.copy:
+        src: docker-compose.yaml
+        dest: /home/app/usvisatrackapi/docker-compose.yaml
+
+    - name: Docker Pull
+      ansible.builtin.shell:
+        cmd: sudo docker compose pull
+        chdir: /home/app/usvisatrackapi/
+
+    - name: Docker Remove Orphans
+      ansible.builtin.shell:
+        cmd: docker compose up -d --remove-orphans
+        chdir: /home/app/usvisatrackapi/
+
+#    - name: Docker Image Prune
+#      ansible.builtin.shell:
+#        cmd: docker image prune
+#        chdir: /home/app/usvisatrackapi/

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    image: repo-docker.ossez.com/docker-hub/usvisartrackapi:0.0.5-SNAPSHOT
+    container_name: usvisatrackapi
+    restart: unless-stopped
+    volumes:
+      - /var/log/usvisatrack:/var/log/usvisatrack
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "db-usvisatrack:158.69.254.99"
+    environment:
+      - APP_DATABASE_HOST=db-usvisatrack
+      - APP_DATABASE_PORT=3306
+      - APP_DATABASE_NAME=usvisatrack
+      - APP_DATABASE_USERNAME=usvisatrack
+      - APP_DATABASE_PASSWORD=ETNN0sqc1qMbgQaeGKWL
